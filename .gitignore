@@ -40,8 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# 3D models — loaded from Google Drive, kept out of the repo to stay lightweight
-/public/models/*.glb
+# 3D models: the converted .glb are committed so they deploy to Vercel.
+# Ignore only oversized raw source files (e.g. the 28MB header) — those are
+# served from Google Drive via /api/hero-model instead.
+/public/models/header.glb
 /public/models/*.gltf
 
 # fetched Instagram profile data (re-fetch with curl when importing)
