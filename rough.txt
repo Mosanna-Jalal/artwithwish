@@ -1,0 +1,6 @@
+
+MONGODB_URI=mongodb+srv://mj:goodtogochief@cluster0.xpb4gro.mongodb.net/artwithwish 
+CLOUDINARY_CLOUD_NAME=dvjavfija
+CLOUDINARY_API_KEY=258715242531455
+CLOUDINARY_API_SECRET=ZfqeQahaufkHUg4BDTxfU-o5KYU
+
