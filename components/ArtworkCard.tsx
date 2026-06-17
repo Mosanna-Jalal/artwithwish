@@ -8,6 +8,7 @@ interface ArtworkCardProps {
   title: string;
   price: number;
   images: string[];
+  videos?: string[];
   category: string;
   available: boolean;
   dimensions?: string;
@@ -15,13 +16,15 @@ interface ArtworkCardProps {
 }
 
 export default function ArtworkCard({
-  id, title, price, images, category, available, dimensions, medium,
+  id, title, price, images, videos = [], category, available, dimensions, medium,
 }: ArtworkCardProps) {
   const image = images?.[0] || "/placeholder.jpg";
+  const mediaCount = (images?.length || 0) + videos.length;
+  const hasVideo = videos.length > 0;
 
   return (
     <Link href={`/artwork/${id}`} className="group block">
-      <div className="relative overflow-hidden rounded-sm bg-[#F5EFE4] aspect-[3/4]">
+      <div className="relative overflow-hidden rounded-sm bg-[#F5EFE4] aspect-[3/4] shadow-sm transition-shadow duration-500 group-hover:shadow-xl">
         {/* Image */}
         <Image
           src={image}
@@ -34,12 +37,24 @@ export default function ArtworkCard({
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-[#1A1A1A]/0 group-hover:bg-[#1A1A1A]/20 transition-all duration-500" />
 
-        {/* Availability badge */}
-        {!available && (
-          <div className="absolute top-3 left-3 bg-[#1A1A1A]/80 text-[#C9A96E] text-[10px] tracking-[0.2em] uppercase px-3 py-1.5">
-            Sold
-          </div>
-        )}
+        {/* Media indicators (top-left) */}
+        <div className="absolute top-3 left-3 flex items-center gap-1.5">
+          {!available && (
+            <span className="bg-[#1A1A1A]/80 text-[#C9A96E] text-[10px] tracking-[0.2em] uppercase px-3 py-1.5">
+              Sold
+            </span>
+          )}
+          {hasVideo && (
+            <span className="bg-[#1A1A1A]/70 text-[#FDFAF6] text-[10px] px-2 py-1.5 flex items-center gap-1">
+              ▶ <span className="tracking-[0.1em]">Video</span>
+            </span>
+          )}
+          {!hasVideo && mediaCount > 1 && (
+            <span className="bg-[#1A1A1A]/70 text-[#FDFAF6] text-[10px] px-2 py-1.5 tracking-[0.1em]">
+              ▦ {mediaCount}
+            </span>
+          )}
+        </div>
 
         {/* Category */}
         <div className="absolute top-3 right-3 bg-[#FDFAF6]/90 text-[#4A4540] text-[10px] tracking-[0.15em] uppercase px-3 py-1.5">

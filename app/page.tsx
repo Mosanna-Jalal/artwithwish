@@ -13,7 +13,14 @@ export const dynamic = "force-dynamic";
 async function getFeaturedArtworks() {
   try {
     await connectDB();
-    const artworks = await Artwork.find({ featured: true }).limit(6).lean();
+    let artworks = await Artwork.find({ featured: true }).limit(6).lean();
+    // Fall back to the most recent pieces if nothing is explicitly featured
+    if (artworks.length === 0) {
+      artworks = await Artwork.find({ images: { $exists: true, $ne: [] } })
+        .sort({ igTimestamp: -1, createdAt: -1 })
+        .limit(6)
+        .lean();
+    }
     return JSON.parse(JSON.stringify(artworks));
   } catch {
     return [];
@@ -167,11 +174,11 @@ export default async function HomePage() {
           {featured.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
               {featured.map((art: {
-                _id: string; title: string; price: number; images: string[];
+                _id: string; title: string; price: number; images: string[]; videos?: string[];
                 category: string; available: boolean; dimensions?: string; medium?: string;
               }) => (
                 <ArtworkCard key={art._id} id={art._id} title={art.title} price={art.price}
-                  images={art.images} category={art.category} available={art.available}
+                  images={art.images} videos={art.videos} category={art.category} available={art.available}
                   dimensions={art.dimensions} medium={art.medium} />
               ))}
             </div>

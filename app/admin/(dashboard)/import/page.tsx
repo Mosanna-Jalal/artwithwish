@@ -1,4 +1,5 @@
 import ImportFromUrl from "@/components/admin/ImportFromUrl";
+import InstagramSync from "@/components/admin/InstagramSync";
 
 export default function ImportPage() {
   return (
@@ -18,27 +19,25 @@ export default function ImportPage() {
         </h1>
       </div>
 
-      {/* Instructions */}
-      <div className="bg-[#1A1A1A] border border-[#2A2A2A] p-5 mb-8 max-w-2xl">
-        <p
-          className="text-sm text-[#C9A96E] font-medium mb-3"
-          style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
-        >
-          How to get image URLs from Instagram
-        </p>
-        <ol
-          className="text-sm text-[#8A8480] flex flex-col gap-2 list-decimal list-inside"
-          style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
-        >
-          <li>Open your Instagram post in a browser (on desktop)</li>
-          <li>Right-click the image → <span className="text-[#FDFAF6]">Open image in new tab</span></li>
-          <li>Copy the URL from the address bar</li>
-          <li>Paste it below — it uploads to Cloudinary automatically</li>
-          <li>Then fill in the artwork details and save</li>
-        </ol>
-      </div>
+      {/* One-click incremental sync */}
+      <InstagramSync />
 
-      <ImportFromUrl />
+      {/* Manual single-image import */}
+      <div className="border-t border-[#2A2A2A] pt-8">
+        <p
+          className="text-sm text-[#C9A96E] font-medium mb-1"
+          style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+        >
+          Or add one piece manually from an image URL
+        </p>
+        <p
+          className="text-xs text-[#8A8480] mb-5"
+          style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+        >
+          Open a post → right-click the image → &quot;Open image in new tab&quot; → paste the URL below.
+        </p>
+        <ImportFromUrl />
+      </div>
     </div>
   );
 }

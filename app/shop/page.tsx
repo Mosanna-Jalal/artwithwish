@@ -12,6 +12,7 @@ interface Artwork {
   title: string;
   price: number;
   images: string[];
+  videos?: string[];
   category: string;
   available: boolean;
   dimensions?: string;
@@ -163,6 +164,7 @@ export default function ShopPage() {
                   title={art.title}
                   price={art.price}
                   images={art.images}
+                  videos={art.videos}
                   category={art.category}
                   available={art.available}
                   dimensions={art.dimensions}

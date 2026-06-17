@@ -47,7 +47,7 @@ export default async function ArtworkPage({ params }: { params: Promise<{ id: st
 
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Image Gallery */}
-          <ImageGallery images={artwork.images} title={artwork.title} />
+          <ImageGallery images={artwork.images} videos={artwork.videos} title={artwork.title} />
 
           {/* Details */}
           <div className="flex flex-col">

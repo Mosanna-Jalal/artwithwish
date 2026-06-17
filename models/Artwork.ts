@@ -5,11 +5,15 @@ export interface IArtwork extends Document {
   description: string;
   price: number;
   images: string[];
+  videos: string[];
   category: string;
   dimensions?: string;
   medium?: string;
   available: boolean;
   featured: boolean;
+  // Instagram provenance — used for incremental sync (never overwrite edits)
+  igShortcode?: string;
+  igTimestamp?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,11 +24,15 @@ const ArtworkSchema = new Schema<IArtwork>(
     description: { type: String, required: true },
     price: { type: Number, required: true, min: 0 },
     images: [{ type: String }],
+    videos: { type: [String], default: [] },
     category: { type: String, required: true, default: "Calligraphy" },
     dimensions: { type: String },
     medium: { type: String },
     available: { type: Boolean, default: true },
     featured: { type: Boolean, default: false },
+    // Unique per Instagram post so re-sync skips posts that already exist
+    igShortcode: { type: String, unique: true, sparse: true, index: true },
+    igTimestamp: { type: Date },
   },
   { timestamps: true }
 );
